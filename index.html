@@ -3,284 +3,347 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalender WFO Mingguan</title>
+  <title>Kalender WFO - Prodia Utama</title>
   <style>
-    /* Global Styles */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f7f7;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #eef2f3, #dbe9f4);
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
+      align-items: flex-start;
+      padding: 30px;
+      min-height: 100vh;
     }
 
     .calendar-container {
       background-color: white;
-      border-radius: 15px;
+      border-radius: 20px;
       padding: 30px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
     }
 
-    /* Calendar Header */
     .calendar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
+      flex-wrap: wrap;
     }
 
     .calendar-header h2 {
-      font-size: 28px;
-      color: #333;
+      font-size: 32px;
+      color: #1e2a38;
+      font-weight: 600;
     }
 
-    .calendar-header button {
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .calendar-header button:hover {
-      background-color: #0056b3;
-    }
-
-    /* Calendar Layout */
     .calendar {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    /* Names Column */
-    .names-column,
-    .days-column {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
+      grid-template-columns: 1fr 3fr;
+      gap: 30px;
     }
 
     .names-column {
+      background-color: #f9fbfc;
+      border: 1px solid #e0e6ed;
+      border-radius: 10px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .names-column .name {
-      background-color: #ffcc00;
+      background-color: #0077cc;
+      color: #fff;
       padding: 12px;
+      text-align: center;
       border-radius: 8px;
       cursor: pointer;
-      text-align: center;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
+      font-weight: 500;
     }
 
     .names-column .name:hover {
-      background-color: #ff9800;
+      background-color: #005fa3;
     }
 
     .days-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .day {
+      background-color: #ffffff;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 120px;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px;
+      transition: 0.3s;
     }
 
-    .days-column .day {
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      text-align: center;
-      min-height: 100px;
-      border: 1px dashed #ddd;
-      position: relative;
-      transition: background-color 0.3s ease;
+    .day:hover {
+      background-color: #f4f9ff;
     }
 
-    .days-column .day:hover {
-      background-color: #f0f0f0;
+    .day strong {
+      font-size: 16px;
+      color: #333;
     }
 
-    .days-column .day .employee {
-      background-color: #007BFF;
+    .day span {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .employee {
+      background-color: #28a745;
       color: white;
-      padding: 8px;
-      border-radius: 5px;
-      margin: 5px 0;
-      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background-color 0.3s ease;
-    }
-
-    .days-column .day .employee:hover {
-      background-color: #0056b3;
-    }
-
-    .days-column .day .remove {
-      color: red;
-      font-size: 18px;
       cursor: pointer;
+    }
+
+    .employee:hover {
+      background-color: #218838;
+    }
+
+    .remove {
       margin-left: 10px;
+      color: #f8d7da;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .download-btn {
-      margin-top: 20px;
-      padding: 12px 30px;
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
       background-color: #28a745;
-      color: white;
       border: none;
+      color: #fff;
+      font-size: 16px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 16px;
-      width: 100%;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
     }
 
     .download-btn:hover {
       background-color: #218838;
     }
 
-    /* Responsive Styles */
-    @media screen and (max-width: 768px) {
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .popup-header {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .popup-body label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .popup-body input[type="checkbox"] {
+      margin-right: 12px;
+    }
+
+    .popup-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .popup-buttons button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .popup-buttons .cancel {
+      background-color: #dc3545;
+    }
+
+    .popup-buttons .cancel:hover {
+      background-color: #c82333;
+    }
+
+    .popup-buttons button:not(.cancel) {
+      background-color: #0077cc;
+    }
+
+    .popup-buttons button:not(.cancel):hover {
+      background-color: #005fa3;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
       .calendar {
         grid-template-columns: 1fr;
       }
 
-      .names-column,
       .days-column {
-        margin-bottom: 20px;
-      }
-
-      .calendar-header h2 {
-        font-size: 24px;
-      }
-
-      .calendar-header button {
-        padding: 10px 18px;
-        font-size: 14px;
+        grid-template-columns: 1fr;
       }
     }
-
-    @media screen and (max-width: 480px) {
-      .calendar-container {
-        padding: 15px;
-      }
-
-      .calendar-header h2 {
-        font-size: 20px;
-      }
-
-      .calendar-header button {
-        font-size: 12px;
-      }
-      
-      .download-btn {
-        padding: 10px;
-      }
-    }
-
   </style>
 </head>
 <body>
 
   <div class="calendar-container">
     <div class="calendar-header">
-      <h2>Kalender WFO Mingguan</h2>
-      <button onclick="downloadLog()">Download Log Mingguan</button>
+      <h2>Kalender WFO - Prodia Utama</h2>
     </div>
 
     <div class="calendar">
       <div class="names-column" id="names-column">
-        <!-- Nama karyawan akan muncul di sini -->
+        <!-- Nama karyawan -->
       </div>
-      
       <div class="days-column" id="days-column">
-        <!-- Hari kerja akan muncul di sini -->
+        <!-- Hari kerja -->
       </div>
     </div>
 
     <div>
-      <button class="download-btn" onclick="downloadLog()">Download Log Mingguan</button>
+      <button class="download-btn" onclick="downloadLog()">Download Log</button>
+    </div>
+  </div>
+
+  <!-- Popup Tanggal -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <div class="popup-header">Pilih Tanggal WFO</div>
+      <div class="popup-body">
+        <div id="popup-dates"></div>
+      </div>
+      <div class="popup-buttons">
+        <button class="cancel" onclick="closePopup()">Batal</button>
+        <button onclick="saveSelectedDates()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup PIN -->
+  <div class="popup" id="pin-popup">
+    <div class="popup-content">
+      <div class="popup-header">Masukkan PIN untuk Download</div>
+      <div class="popup-body">
+        <input type="password" id="pin-input" placeholder="6 Digit PIN" maxlength="6" style="width: 100%; padding: 10px; font-size: 16px; text-align: center;">
+        <div id="pin-error" style="color: red; text-align: center; margin-top: 10px; display: none;">PIN salah. Coba lagi.</div>
+      </div>
+      <div class="popup-buttons">
+        <button class="cancel" onclick="closePinPopup()">Batal</button>
+        <button onclick="verifyPin()">Verifikasi</button>
+      </div>
     </div>
   </div>
 
   <script>
-    const employees = ["Alice", "Bob", "Charlie", "David", "Eva"];
     const weekdays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const startOfWeek = new Date(today.setDate(today.getDate() - dayOfWeek + 1)); // Senin minggu ini
+    const employees = ["Alice", "Bob", "Charlie", "Diana"];
+    const schedule = JSON.parse(localStorage.getItem("schedule")) || {};
+    let selectedEmployee = null;
+    const startOfWeek = new Date();
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1);
 
-    let schedule = JSON.parse(localStorage.getItem("schedule")) || {};
-
-    // Membuat kolom nama karyawan
     function createNamesColumn() {
       const namesColumn = document.getElementById("names-column");
       employees.forEach((employee) => {
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("name");
-        nameDiv.draggable = true;
         nameDiv.textContent = employee;
-        nameDiv.dataset.employee = employee;
-
-        // Event listener untuk drag
-        nameDiv.addEventListener("dragstart", (e) => dragStart(e));
-        nameDiv.addEventListener("dragend", (e) => dragEnd(e));
-        
-        // Event listener untuk touch (mobile)
-        nameDiv.addEventListener("touchstart", (e) => touchStart(e));
-        nameDiv.addEventListener("touchend", (e) => touchEnd(e));
-        
+        nameDiv.onclick = () => openPopup(employee);
         namesColumn.appendChild(nameDiv);
       });
     }
 
-    // Membuat kolom hari kerja dengan tanggal
     function createDaysColumn() {
       const daysColumn = document.getElementById("days-column");
       weekdays.forEach((day, index) => {
+        const date = new Date(startOfWeek);
+        date.setDate(date.getDate() + index);
+        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
         const dayDiv = document.createElement("div");
         dayDiv.classList.add("day");
         dayDiv.dataset.day = day;
+        dayDiv.innerHTML = `<strong>${day}</strong><br><span>${formattedDate}</span>`;
 
-        // Menentukan tanggal untuk setiap hari kerja
-        const currentDay = new Date(startOfWeek);
-        currentDay.setDate(startOfWeek.getDate() + index);
-        const formattedDate = currentDay.toLocaleDateString('id-ID', { day: 'numeric', month: 'long' });
-
-        const dayLabel = document.createElement("div");
-        dayLabel.textContent = `${day}, ${formattedDate}`;
-        dayDiv.appendChild(dayLabel);
-
-        // Event listener untuk drag over dan drop
-        dayDiv.addEventListener("dragover", (e) => dragOver(e));
-        dayDiv.addEventListener("drop", (e) => drop(e));
-        
-        // Event listener untuk touch (mobile)
-        dayDiv.addEventListener("touchmove", (e) => touchMove(e));
-        dayDiv.addEventListener("touchend", (e) => drop(e));
-
-        // Menampilkan jadwal yang sudah ada di localStorage
         if (schedule[day]) {
-          schedule[day].forEach(employee => {
-            addEmployeeToDay(dayDiv, employee);
+          schedule[day].forEach((employee) => {
+            const employeeDiv = document.createElement("div");
+            employeeDiv.classList.add("employee");
+            employeeDiv.textContent = employee;
+            employeeDiv.innerHTML += `<span class="remove" onclick="removeEmployeeFromDay(event)">X</span>`;
+            dayDiv.appendChild(employeeDiv);
           });
         }
 
@@ -288,106 +351,121 @@
       });
     }
 
-    // Fungsi untuk menambahkan nama karyawan ke dalam hari
-    function addEmployeeToDay(dayDiv, employee) {
-      const employeeDiv = document.createElement("div");
-      employeeDiv.classList.add("employee");
-      employeeDiv.textContent = `${employee} `;
-      const removeBtn = document.createElement("span");
-      removeBtn.textContent = "X";
-      removeBtn.classList.add("remove");
-      removeBtn.addEventListener("click", () => removeEmployeeFromDay(dayDiv, employee, removeBtn));
-      employeeDiv.appendChild(removeBtn);
-      dayDiv.appendChild(employeeDiv);
-    }
+    function openPopup(employee) {
+      selectedEmployee = employee;
+      const popupDates = document.getElementById("popup-dates");
+      popupDates.innerHTML = "";
 
-    // Fungsi saat mulai drag
-    function dragStart(event) {
-      event.target.classList.add("dragging");
-    }
+      weekdays.forEach((day, index) => {
+        const date = new Date(startOfWeek);
+        date.setDate(date.getDate() + index);
+        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
-    // Fungsi saat selesai drag
-    function dragEnd(event) {
-      event.target.classList.remove("dragging");
-    }
+        const dateLabel = document.createElement("label");
+        const dateCheckbox = document.createElement("input");
+        dateCheckbox.type = "checkbox";
+        dateCheckbox.dataset.day = day;
+        dateCheckbox.checked = schedule[day] && schedule[day].includes(employee);
 
-    // Fungsi saat mulai touch
-    function touchStart(event) {
-      event.target.classList.add("dragging");
-    }
+        dateLabel.appendChild(dateCheckbox);
+        dateLabel.appendChild(document.createTextNode(formattedDate));
 
-    // Fungsi saat selesai touch
-    function touchEnd(event) {
-      event.target.classList.remove("dragging");
-    }
-
-    // Fungsi drag over
-    function dragOver(event) {
-      event.preventDefault();
-    }
-
-    // Fungsi drop
-    function drop(event) {
-      event.preventDefault();
-      const employee = document.querySelector(".name.dragging");
-      if (employee) {
-        const day = event.target.closest(".day");
-        if (day) {
-          const dayName = day.dataset.day;
-          const employeeName = employee.dataset.employee;
-
-          if (!schedule[dayName]) {
-            schedule[dayName] = [];
-          }
-
-          if (!schedule[dayName].includes(employeeName)) {
-            schedule[dayName].push(employeeName);
-            updateDaySchedule(day, schedule[dayName]);
-            saveSchedule();
-          }
-        }
-      }
-    }
-
-    // Update tampilan jadwal di setiap hari
-    function updateDaySchedule(dayElement, daySchedule) {
-      dayElement.innerHTML = `<div>${dayElement.dataset.day}</div>`;
-      daySchedule.forEach(employee => {
-        addEmployeeToDay(dayElement, employee);
+        popupDates.appendChild(dateLabel);
+        popupDates.appendChild(document.createElement("br"));
       });
+
+      document.getElementById("popup").style.display = "flex";
     }
 
-    // Fungsi untuk menghapus nama karyawan dari jadwal
-    function removeEmployeeFromDay(dayDiv, employeeName, removeBtn) {
-      const dayName = dayDiv.dataset.day;
-      schedule[dayName] = schedule[dayName].filter(employee => employee !== employeeName);
-      removeBtn.parentElement.remove(); // Menghapus elemen nama karyawan beserta tombol X
-      updateDaySchedule(dayDiv, schedule[dayName]);
+    function saveSelectedDates() {
+      const selectedDates = [];
+      const checkboxes = document.querySelectorAll("#popup-dates input[type='checkbox']:checked");
+      checkboxes.forEach((checkbox) => selectedDates.push(checkbox.dataset.day));
+
+      weekdays.forEach((day) => {
+        if (!schedule[day]) schedule[day] = [];
+        if (selectedDates.includes(day) && !schedule[day].includes(selectedEmployee)) {
+          schedule[day].push(selectedEmployee);
+        } else if (!selectedDates.includes(day) && schedule[day].includes(selectedEmployee)) {
+          schedule[day] = schedule[day].filter((e) => e !== selectedEmployee);
+        }
+      });
+
       saveSchedule();
+      closePopup();
+      location.reload();
     }
 
-    // Menyimpan schedule ke localStorage
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
     function saveSchedule() {
       localStorage.setItem("schedule", JSON.stringify(schedule));
     }
 
-    // Fungsi untuk mendownload log mingguan
-    function downloadLog() {
-      let log = "Log Jadwal WFO Mingguan\n\n";
-      for (let day in schedule) {
-        log += `${day}: ${schedule[day].join(", ")}\n`;
-      }
+    function removeEmployeeFromDay(event) {
+      const employeeDiv = event.target.parentElement;
+      const dayDiv = employeeDiv.closest(".day");
+      const day = dayDiv.dataset.day;
+      const employee = employeeDiv.textContent.replace("X", "").trim();
 
-      const blob = new Blob([log], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "log_wfo_mingguan.txt";
-      a.click();
-      URL.revokeObjectURL(url);
+      schedule[day] = schedule[day].filter((e) => e !== employee);
+      saveSchedule();
+      employeeDiv.remove();
     }
 
-    // Memulai halaman
+    function downloadLog() {
+      openPinPopup();
+    }
+
+    function openPinPopup() {
+      document.getElementById("pin-input").value = "";
+      document.getElementById("pin-error").style.display = "none";
+      document.getElementById("pin-popup").style.display = "flex";
+    }
+
+    function closePinPopup() {
+      document.getElementById("pin-popup").style.display = "none";
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById("pin-input").value;
+      const correctPin = "123456";
+
+      if (pin === correctPin) {
+        closePinPopup();
+        downloadAndClearLog();
+      } else {
+        document.getElementById("pin-error").style.display = "block";
+      }
+    }
+
+    function downloadAndClearLog() {
+      const log = ["Jadwal Karyawan WFO"];
+      weekdays.forEach((day, index) => {
+        if (schedule[day] && schedule[day].length > 0) {
+          const date = new Date(startOfWeek);
+          date.setDate(date.getDate() + index);
+          const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+          log.push(`${day}, ${formattedDate}: ${schedule[day].join(", ")}`);
+        }
+      });
+
+      const blob = new Blob([log.join("\n")], { type: "text/plain;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Jadwal_Karyawan_WFO.txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
+
+      weekdays.forEach((day) => {
+        schedule[day] = [];
+      });
+      saveSchedule();
+      location.reload();
+    }
+
     createNamesColumn();
     createDaysColumn();
   </script>
