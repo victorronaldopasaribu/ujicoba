@@ -255,6 +255,9 @@
       }
     }
   </style>
+<!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -264,12 +267,8 @@
     </div>
 
     <div class="calendar">
-      <div class="names-column" id="names-column">
-        <!-- Nama karyawan -->
-      </div>
-      <div class="days-column" id="days-column">
-        <!-- Hari kerja -->
-      </div>
+      <div class="names-column" id="names-column"></div>
+      <div class="days-column" id="days-column"></div>
     </div>
 
     <div>
@@ -277,7 +276,8 @@
     </div>
   </div>
 
-  <!-- Popup Tanggal -->
+  <!-- Popups (same as before) -->
+  <!-- Tanggal -->
   <div class="popup" id="popup">
     <div class="popup-content">
       <div class="popup-header">Pilih Tanggal WFO</div>
@@ -291,7 +291,7 @@
     </div>
   </div>
 
-  <!-- Popup PIN -->
+  <!-- PIN -->
   <div class="popup" id="pin-popup">
     <div class="popup-content">
       <div class="popup-header">Masukkan PIN untuk Download</div>
@@ -307,15 +307,32 @@
   </div>
 
   <script>
+    // Firebase setup
+    const firebaseConfig = {
+      apiKey: "AIzaSyBD50qAIbKWTKtOhLxsWRUluUN5wZzxIAI",
+      authDomain: "test-ffdca.firebaseapp.com",
+      databaseURL: "https://test-ffdca-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "test-ffdca",
+      storageBucket: "test-ffdca.appspot.com",
+      messagingSenderId: "1040515165795",
+      appId: "1:1040515165795:web:54975bed2e47a1af389256",
+      measurementId: "G-7LJB5873M5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
     const weekdays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
     const employees = ["Dina Kharisma", "Yudy Pandjaitan", "Victor Pasaribu", "Fitri Rahmawati", "Riska Julia", "Ary Tryjuniarti", "Hafizat Intan", "Veni Wijaya", "Dinda Aisyah"];
-    const schedule = JSON.parse(localStorage.getItem("schedule")) || {};
+    let schedule = {};
     let selectedEmployee = null;
+
     const startOfWeek = new Date();
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1);
 
     function createNamesColumn() {
       const namesColumn = document.getElementById("names-column");
+      namesColumn.innerHTML = "";
       employees.forEach((employee) => {
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("name");
@@ -327,6 +344,8 @@
 
     function createDaysColumn() {
       const daysColumn = document.getElementById("days-column");
+      daysColumn.innerHTML = "";
+
       weekdays.forEach((day, index) => {
         const date = new Date(startOfWeek);
         date.setDate(date.getDate() + index);
@@ -369,7 +388,6 @@
 
         dateLabel.appendChild(dateCheckbox);
         dateLabel.appendChild(document.createTextNode(formattedDate));
-
         popupDates.appendChild(dateLabel);
         popupDates.appendChild(document.createElement("br"));
       });
@@ -393,7 +411,7 @@
 
       saveSchedule();
       closePopup();
-      location.reload();
+      loadSchedule(); // refresh jadwal
     }
 
     function closePopup() {
@@ -401,7 +419,7 @@
     }
 
     function saveSchedule() {
-      localStorage.setItem("schedule", JSON.stringify(schedule));
+      db.ref("schedule").set(schedule);
     }
 
     function removeEmployeeFromDay(event) {
@@ -462,12 +480,20 @@
       weekdays.forEach((day) => {
         schedule[day] = [];
       });
+
       saveSchedule();
-      location.reload();
+      loadSchedule();
     }
 
+    async function loadSchedule() {
+      const snapshot = await db.ref("schedule").once("value");
+      schedule = snapshot.val() || {};
+      createDaysColumn();
+    }
+
+    // Initialize
     createNamesColumn();
-    createDaysColumn();
+    loadSchedule();
   </script>
 
 </body>
