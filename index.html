@@ -246,14 +246,58 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .calendar {
-        grid-template-columns: 1fr;
-      }
+	  body {
+		padding: 20px;
+	  }
 
-      .days-column {
-        grid-template-columns: 1fr;
-      }
-    }
+	  .calendar-header h2 {
+		font-size: 24px;
+		text-align: center;
+		width: 100%;
+	  }
+
+	  .calendar {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	  }
+
+	  .names-column {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 10px;
+		padding: 15px;
+		justify-content: center;
+	  }
+
+	  .names-column .name {
+		flex: 1 1 45%;
+		font-size: 14px;
+		padding: 10px;
+	  }
+
+	  .days-column {
+		grid-template-columns: 1fr;
+		gap: 15px;
+	  }
+
+	  .day {
+		padding: 12px;
+		gap: 8px;
+	  }
+
+	  .popup-content {
+		padding: 20px;
+	  }
+
+	  .popup-buttons {
+		flex-direction: column;
+		gap: 10px;
+	  }
+
+	  .popup-buttons button {
+		margin: 0;
+	  }
+	}
   </style>
 <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
